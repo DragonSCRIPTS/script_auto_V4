@@ -1,0 +1,122 @@
+-- Variáveis e configurações iniciais
+local playersInvolved = game.Players:GetPlayers()  -- Lista de jogadores no servidor
+local fullMoonVisible = false  -- Lua Cheia visível
+local trialCompleted = false  -- Verificação de prova completada
+local raceAwakeningActivated = false  -- Flag de Despertar ativado
+local fragmentIconRequired = 1000  -- Quantidade de fragmentos necessária para o treinamento
+
+-- Informações de localização de cada porta para cada raça
+local racePortals = {
+    Fishman = CFrame.new(28224.056640625, 14889.4267578125, -210.5872039794922),
+    Human = CFrame.new(29237.294921875, 14889.4267578125, -206.94955444335938),
+    Cyborg = CFrame.new(28492.4140625, 14894.4267578125, -422.1100158691406),
+    Skypiea = CFrame.new(28967.408203125, 14918.0751953125, 234.31198120117188),
+    Ghoul = CFrame.new(28672.720703125, 14889.1279296875, 454.5961608886719),
+    Mink = CFrame.new(29020.66015625, 14889.4267578125, -379.2682800292969)
+}
+
+-- Função para teleportar para a porta da raça correta
+function teleportToRaceDoor(race)
+    local racePortal = racePortals[race]
+    if racePortal then
+        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = racePortal
+    else
+        print("Raça não encontrada.")
+    end
+end
+
+-- Função para verificar qual lua está visível (Lua Cheia ou outra)
+function MoonTextureId()
+    if Sea1 then
+        return game:GetService("Lighting").FantasySky.MoonTextureId
+    elseif Sea2 then
+        return game:GetService("Lighting").FantasySky.MoonTextureId
+    elseif Sea3 then
+        return game:GetService("Lighting").Sky.MoonTextureId
+    end
+end
+
+function CheckMoon()
+    moon8 = "http://www.roblox.com/asset/?id=9709150401"
+    moon7 = "http://www.roblox.com/asset/?id=9709150086"
+    moon6 = "http://www.roblox.com/asset/?id=9709149680"
+    moon5 = "http://www.roblox.com/asset/?id=9709149431"
+    moon4 = "http://www.roblox.com/asset/?id=9709149052"
+    moon3 = "http://www.roblox.com/asset/?id=9709143733"
+    moon2 = "http://www.roblox.com/asset/?id=9709139597"
+    moon1 = "http://www.roblox.com/asset/?id=9709135895"
+    moonreal = MoonTextureId()
+    cofullmoonkothangbeo = "Bad Moon"
+    if moonreal == moon5 or moonreal == moon4 then
+        if moonreal == moon5 then
+            cofullmoonkothangbeo = "Lua Cheia"
+        elseif moonreal == moon4 then
+            cofullmoonkothangbeo = "Próxima Noite"
+        end
+    end
+    return cofullmoonkothangbeo
+end
+
+-- Função para verificar o horário do jogo (dia ou noite)
+function function7()
+    GameTime = "Error"
+    local c = game.Lighting
+    local ao = c.ClockTime
+    if ao >= 18 or ao < 5 then
+        GameTime = "Noite"
+    else
+        GameTime = "Dia"
+    end
+    return GameTime
+end
+
+-- Função para verificar a hora do servidor
+function function6()
+    return math.floor(game.Lighting.ClockTime)
+end
+
+-- Função para retornar o tempo real do servidor
+function getServerTime()
+    RealTime = tostring(math.floor(game.Lighting.ClockTime * 100) / 100)
+    RealTime = tostring(game.Lighting.ClockTime)
+    RealTimeTable = RealTime:split(".")
+    Minute, Second = RealTimeTable[1], tonumber(0 + tonumber(RealTimeTable[2] / 100)) * 60
+    return Minute, Second
+end
+
+-- Função de verificação da lua e horas
+function function8()
+    local c = game...
+end
+
+-- Código de rastreamento de quests, que você adicionou
+spawn(function()
+    pcall(function()
+        while wait() do
+            if _G.AutoQuestRace then
+                if game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Timer.Visible == true then
+                    if game:GetService("Players").LocalPlayer.Data.Race.Value == "Human" then
+                        for i, v in pairs(game.Workspace.Enemies:GetDescendants()) do
+                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                pcall(function()
+                                    repeat wait(.1)
+                                        v.Humanoid.Health = 0
+                                        v.HumanoidRootPart.CanCollide = false
+                                        sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                                    until not _G.AutoQuestRace or not v.Parent or v.Humanoid.Health <= 0
+                                end)
+                            end
+                        end
+                    elseif game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
+                        for i, v in pairs(game:GetService("Workspace").Map.SkyTrial.Model:GetDescendants()) do
+                            if v.Name == "snowisland_Cylinder.081" then
+                                topos(v.CFrame * CFrame.new(0, 0, 0))
+                            end
+                        end
+                    -- Continuar com outras verificações de raça como o código original...
+                    end
+                end
+            end
+        end
+    end)
+end)
